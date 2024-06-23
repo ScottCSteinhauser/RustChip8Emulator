@@ -1,0 +1,1 @@
+/Users/scottsteinhauser/Projects/RustChip8Emulator/desktop/target/debug/desktop: /Users/scottsteinhauser/Projects/RustChip8Emulator/chip8_core/src/lib.rs /Users/scottsteinhauser/Projects/RustChip8Emulator/desktop/src/main.rs
