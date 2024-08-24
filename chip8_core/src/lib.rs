@@ -19,8 +19,8 @@ const FONTSET: [u8; FONTSET_SIZE] = [
 0xF0, 0x80, 0xF0, 0x80, 0x80 // F
 ];
 
-const SCREEN_WIDTH: usize = 64;
-const SCREEN_HEIGHT: usize = 32;
+pub const SCREEN_WIDTH: usize = 64;
+pub const SCREEN_HEIGHT: usize = 32;
 
 const RAM_SIZE: usize = 4096;
 const NUM_REGS: usize = 16;
@@ -124,5 +124,19 @@ impl Emu {
         match (digit1, digit2, digit3, digit4) {
             (_, _, _, _) => unimplemented!("Unimplemented opcode: {}", op),
         }
+    }
+
+    pub fn get_display(&mut self) -> &[bool] {
+        &self.screen
+    }
+
+    pub fn key_press(&mut self, idx: usize, pressed: bool) {
+        self.keys[idx as usize] = pressed;
+    }
+
+    pub fn load(&mut self, data: &[u8]) {
+        let start = START_ADDR as usize;
+        let end = (START_ADDR as usize) + data.len();
+        self.ram[start..end].copy_from_slice(data);
     }
 }

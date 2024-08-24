@@ -1,16 +1,27 @@
-use std::io;
+use std::env;
+use chip8_core::*;
 
+const SCALE: u32 = 15;
+const WINDOW_WIDTH: u32 = (SCREEN_WIDTH as u32) * SCALE; 
+const WINDOW_HEIGHT: u32 = (SCREEN_HEIGHT as u32) * SCALE;
 
 fn main() {
-    println!("Guess the number!");
+    let args: Vec<_> = env::args().collect();
+    if args.len() != 2 {
+        println!("Usage: cargo run path/to/game");
+        return;
+    }
+    
+    let sdl_context = sdl2::init().unwrap();
+    let video_subsystem = sdl_context.video().unwrap();
+    let window = video_subsystem
+    .window("CHIP-8", WINDOW_WIDTH, WINDOW_HEIGHT)
+    .position_centered()
+    .opengl()
+    .build()
+    .unwrap();
 
-    println!("Please input your guess.");
-
-    let mut guess = String::new();
-
-    io::stdin()
-        .read_line(&mut guess)
-        .expect("Failed to read line");
-
-    println!("You guessed: {}", guess);
+    let mut canvas = window.into_canvas().present_vsync().build().unwrap(); 
+    canvas.clear();
+    canvas.present();
 }
